@@ -1,0 +1,8 @@
+{
+    "GenericError": "Ops, something went wrong!",
+    "MissingArguments": "Missing arguments",
+    "DocumentNotFound": "Document not found",
+
+    "GenericSuccess": "Success",
+    "DocumentCreated": "Document created"
+}
