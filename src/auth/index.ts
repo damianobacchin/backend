@@ -2,7 +2,7 @@ import passport from 'passport'
 import passportLocal from 'passport-local'
 import passportJwt from 'passport-jwt'
 import User from '../models/user.model'
-import crypto from 'crypto'
+import { compareSync } from 'bcrypt'
 import { PassportMethod } from '../config/enums/Passport.enum'
 import { IAuthUser } from '../interfaces/user.interface'
 import keys from '../config/env/keys'
@@ -24,8 +24,8 @@ passport.use(
                 if (!user) return done(null, false, { message: 'Utente non trovato' })
 
                 // Verify password
-                const hashedPassword = crypto.createHash('sha256').update(password).digest('hex')
-                if (user.password !== hashedPassword) return done(null, false, { message: 'Password non corretta' })
+                const verifyPassword = compareSync(password, user.password)
+                if (!verifyPassword) return done(null, false, { message: 'Password non corretta' })
 
                 const authUser: IAuthUser = {
                     _id: user._id.toString(),
